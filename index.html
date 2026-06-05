@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantai Indrayanti</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+            background: linear-gradient(135deg, #023e8a, #0077b6, #00b4d8);
+        }
+
+        /* SLIDER BACKGROUND */
+        .slider {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out; /* Optimasi transisi agar lebih mulus */
+            filter: brightness(0.55);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Pastikan folder 'foto' dan nama file ini sesuai di komputer Anda */
+        .slide:nth-child(1) { background-image: url('foto/utama.jpg'); }
+        .slide:nth-child(2) { background-image: url('foto/utama2.jpg'); }
+        .slide:nth-child(3) { background-image: url('foto/utama3.jpg'); }
+
+        /* CARD EFFECT */
+        .card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* Dukungan untuk Safari */
+            padding: 60px;
+            border-radius: 35px;
+            text-align: center;
+            max-width: 850px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Menambah kesan kaca modern */
+        }
+
+        h1 {
+            font-size: 65px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 15px 0 30px 0;
+        }
+
+        a {
+            display: inline-block;
+            padding: 15px 35px;
+            background: white;
+            color: #0077b6;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SLIDER BACKGROUND -->
+    <div class="slider">
+        <div class="slide active"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+    </div>
+
+    <!-- MAIN CARD -->
+    <div class="card">
+        <h1>🌊 Pantai Indrayanti</h1>
+        <p>Wisata terbaik Gunung Kidul dengan pasir putih dan laut biru indah.</p>
+        <a href="informasi.html">Masuk Informasi</a>
+    </div>
+
+    <!-- JAVASCRIPT SLIDER -->
+    <script>
+        let slides = document.querySelectorAll('.slide');
+        let index = 0;
+
+        setInterval(() => {
+            slides[index].classList.remove('active');
+            index = (index + 1) % slides.length;
+            slides[index].classList.add('active');
+        }, 4000); // Gambar berganti setiap 4 detik
+    </script>
+
+</body>
+</html>

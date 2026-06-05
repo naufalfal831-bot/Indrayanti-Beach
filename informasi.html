@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Lengkap Pantai Indrayanti</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            min-height: 100vh;
+            color: white;
+            
+            /* BACKGROUND GAMBAR + OVERLAY WARNA AGAR TEKS TETAP JELAS */
+            background: linear-gradient(135deg, rgba(3, 4, 94, 0.85), rgba(0, 119, 182, 0.75)), 
+                        url('foto/utama.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Background tidak ikut bergeser saat di-scroll */
+            
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMASI GELEMBUNG (BUBBLES) --- */
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6);
+            animation: floatUp 8s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 320px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 2;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #caf0f8;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sidebar button {
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar button i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar button:hover, .sidebar button.active-btn {
+            background: white;
+            color: #0077b6;
+            transform: translateX(8px);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+
+        /* --- CONTENT & POP-UP EFFECT --- */
+        .content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .box {
+            display: none;
+            width: 100%;
+            max-width: 850px;
+            background: rgba(3, 4, 94, 0.4); /* Menggelapkan background box sedikit agar teks makin kontras */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 45px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            
+            /* Animasi Pop-Up lentur */
+            transform: scale(0.7) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .box.popup-active {
+            display: block;
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        h2.title-section { 
+            color: #caf0f8; 
+            margin-bottom: 20px; 
+            font-size: 32px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        p, li { 
+            font-size: 16px;
+            line-height: 1.8; 
+            color: #f0f3f5;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        ul { 
+            margin-left: 25px; 
+            margin-bottom: 20px;
+        }
+
+        li strong { color: #caf0f8; }
+
+        /* GALERI BERGAYA KARTU */
+        .gallery {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery img {
+            width: 31%;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gallery img:hover { 
+            transform: scale(1.08) translateY(-5px); 
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        /* INTERAKTIF MAPS */
+        iframe {
+            width: 100%;
+            height: 380px;
+            border-radius: 20px;
+            margin-top: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-back {
+            margin-top: auto;
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px dashed rgba(255, 255, 255, 0.3) !important;
+            text-align: center !important;
+            justify-content: center !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bubbles" id="bubble-container"></div>
+
+    <div class="sidebar">
+        <h2>🌊 Indrayanti</h2>
+        <button class="nav-btn" onclick="show('t', this)"><i class="fas fa-info-circle"></i> Tentang</button>
+        <button class="nav-btn" onclick="show('s', this)"><i class="fas fa-history"></i> Sejarah & Asal Nama</button>
+        <button class="nav-btn" onclick="show('l', this)"><i class="fas fa-route"></i> Rute & Lokasi</button>
+        <button class="nav-btn" onclick="show('d', this)"><i class="fas fa-star"></i> Pesona Daya Tarik</button>
+        <button class="nav-btn" onclick="show('f', this)"><i class="fas fa-concierge-bell"></i> Fasilitas Wisata</button>
+        <button class="nav-btn" onclick="show('g', this)"><i class="fas fa-images"></i> Galeri Foto</button>
+        <button class="nav-btn" onclick="show('m', this)"><i class="fas fa-map-marked-alt"></i> Google Maps</button>
+        <button class="nav-btn" onclick="show('z', this)"><i class="fas fa-check-circle"></i> Kesimpulan</button>
+        
+        <button class="btn-back" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i> Kembali</button>
+    </div>
+
+    <div class="content">
+
+        <div id="t" class="box">
+            <h2 class="title-section"><i class="fas fa-info-circle"></i> Tentang Pantai Indrayanti</h2>
+            <p>Pantai Indrayanti merupakan permata tersembunyi yang kini menjelma menjadi destinasi wisata bahari paling ikonik di jajaran pesisir selatan Kabupaten Gunung Kidul, Yogyakarta. Berbeda dengan pandangan umum tentang pantai selatan yang mistis atau berbatu tajam, pantai ini justru menawarkan lanskap yang sangat ramah bagi pelancong.</p>
+            <p>Dikenal karena hamparan pasir putihnya yang begitu lembut, bentang alam pantai ini dibingkai megah oleh bukit-bukit karang tua di sisi barat dan timurnya. Air lautnya yang berwarna biru gradasi toska menyuguhkan pemandangan jernih yang memanjakan mata, menjadikannya magnet utama bagi wisatawan domestik maupun mancanegara yang berkunjung ke Daerah Istimewa Yogyakarta.</p>
+        </div>
+
+        <div id="s" class="box">
+            <h2 class="title-section"><i class="fas fa-history"></i> Sejarah & Misteri Nama</h2>
+            <p>Ada fakta unik di balik penamaan tempat ini. Pemerintah daerah dan kraton Yogyakarta sebenarnya secara resmi mendaftarkan kawasan ini dengan nama <strong>Pantai Pulang Syawal</strong>. Namun, di tengah masyarakat dan wisatawan, nama "Indrayanti" jauh lebih melekat erat.</p>
+            <p>Sejarah nama Indrayanti diambil dari papan nama sebuah restoran dan cafe lokal milik pasangan suami-istri bernama <strong>Bapak Indra dan Ibu Yanti</strong> yang beroperasi di dekat pantai saat pariwisata daerah tersebut mulai menggeliat. Karena restoran tersebut menyajikan layanan yang ramah dan menjadi satu-satunya penanda mencolok di masa lalu, orang-orang mulai menyebut area di sekitarnya sebagai "Pantai Indrayanti" hingga menjadi viral secara turun-temurun.</p>
+        </div>
+
+        <div id="l" class="box">
+            <h2 class="title-section"><i class="fas fa-route"></i> Rute & Lokasi Geografis</h2>
+            <p>Secara administratif, objek wisata ini terletak di <strong>Dusun Ngandong, Desa Sidoharjo, Kecamatan Tepus, Kabupaten Gunung Kidul, Daerah Istimewa Yogyakarta</strong>.</p>
+            <p>Jika Anda berangkat dari pusat Kota Yogyakarta atau kawasan Malioboro, jarak tempuh yang harus dilalui adalah sekitar 65 hingga 70 kilometer. Perjalanan memakan waktu kurang lebih 1,5 hingga 2 jam berkendara tergantung pada kondisi lalu lintas. Jalur utama yang bisa ditempuh melintasi rute Kota Yogyakarta menuju Jalan Wonosari, melewati Bukit Bintang, alun-alun Wonosari, hingga mengambil arah selatan menuju Tepus.</p>
+        </div>
+
+        <div id="d" class="box">
+            <h2 class="title-section"><i class="fas fa-star"></i> Pesona & Daya Tarik Utama</h2>
+            <p>Banyak hal yang membuat wisatawan betah berlama-lama menghabiskan waktu di pantai ini, di antaranya adalah:</p>
+            <ul>
+                <li><strong>Kebersihan yang Terjaga Ketat:</strong> Pengelola menerapkan denda bagi siapa saja yang membuang sampah sembarangan. Hal ini membuat pesisir pantai bersih berkilau.</li>
+                <li><strong>Tebing Karang Eksotis:</strong> Pengunjung dapat mendaki bukit karang di sebelah timur untuk melihat panorama luas Samudra Hindia dari ketinggian.</li>
+                <li><strong>Cakrawala Sunset:</strong> Menjelang sore hari, langit berganti warna menjadi jingga keemasan, menawarkan momen matahari terbenam yang sangat romantis dan estetik.</li>
+                <li><strong>Wahana Bermain:</strong> Tersedia penyewaan payung pantai yang besar untuk bersantai, serta sewa motor ATV dan Jet Ski untuk menantang adrenalin.</li>
+            </ul>
+        </div>
+
+        <div id="f" class="box">
+            <h2 class="title-section"><i class="fas fa-concierge-bell"></i> Fasilitas Lengkap Wisata</h2>
+            <p>Sebagai salah satu pantai yang dikelola secara modern, fasilitas pendukung di sini tergolong yang paling lengkap:</p>
+            <ul>
+                <li><strong>Akomodasi Penginapan:</strong> Mulai dari cottage kayu bernuansa alam hingga hotel modern menghadap langsung ke arah deburan ombak pantai.</li>
+                <li><strong>Kuliner Seafood:</strong> Berjajar restoran yang menyajikan hidangan laut segar (ikan bakar, kepiting, cumi) dengan bumbu khas Jawa yang memanjakan lidah.</li>
+                <li><strong>Kenyamanan Publik:</strong> Area parkir luas untuk bus pariwisata, jejeran toilet bersih, mushola, serta toko suvenir kerajinan lokal.</li>
+                <li><strong>Lifeguard:</strong> Adanya pengawasan tim SAR pantai secara berkala guna memastikan keselamatan para perenang.</li>
+            </ul>
+        </div>
+
+        <div id="g" class="box">
+            <h2 class="title-section"><i class="fas fa-images"></i> Galeri Foto Keindahan</h2>
+            <div class="gallery">
+                <img src="indra.jpg" alt="Pantai Indrayanti Pagi">
+                <img src="indra2.jpg" alt="Tebing Karang Indrayanti">
+                <img src="indra3.jpg" alt="Sunset Indrayanti">
+            </div>
+        </div>
+
+        <div id="m" class="box">
+            <h2 class="title-section"><i class="fas fa-map-marked-alt"></i> Navigasi Google Maps</h2>
+            <iframe src="https://maps.google.com/maps?q=Pantai%20Indrayanti&t=&z=13&ie=UTF-8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div id="z" class="box">
+            <h2 class="title-section"><i class="fas fa-check-circle"></i> Kesimpulan Perjalanan</h2>
+            <p>Pantai Indrayanti bukan sekadar tempat singgah biasa, melainkan sebuah paket wisata pantai yang komplit di Yogyakarta. Pantai ini sangat direkomendasikan untuk liburan keluarga, perjalanan romantis, maupun petualangan fotografi bersama teman-teman.</p>
+            <p>Akses jalan yang mulus, kebersihan lingkungan yang sangat terjaga, serta tersedianya fasilitas penunjang yang serba ada menjadikannya destinasi wajib minimal sekali seumur hidup saat Anda menapakkan kaki di bumi Handayani, Gunung Kidul.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function show(id, btnElement) {
+            let boxes = document.querySelectorAll('.box');
+            
+            boxes.forEach(b => {
+                b.classList.remove('popup-active'); 
+                setTimeout(() => { b.style.display = 'none'; }, 200); 
+            });
+
+            setTimeout(() => {
+                let targetBox = document.getElementById(id);
+                targetBox.style.display = 'block'; 
+                setTimeout(() => {
+                    targetBox.classList.add('popup-active'); 
+                }, 50);
+            }, 250);
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-btn'));
+            if(btnElement) btnElement.classList.add('active-btn');
+        }
+
+        function createBubbles() {
+            const container = document.getElementById('bubble-container');
+            const bubbleCount = 25; 
+
+            for (let i = 0; i < bubbleCount; i++) {
+                let bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                let size = Math.random() * 50 + 15;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${Math.random() * 6 + 6}s`;
+                bubble.style.animationDelay = `${Math.random() * 6}s`;
+                container.appendChild(bubble);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            createBubbles();
+            const firstBtn = document.querySelector('.nav-btn');
+            show('t', firstBtn);
+        });
+    </script>
+
+</body>
+</html>
